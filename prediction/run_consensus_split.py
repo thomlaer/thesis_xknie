@@ -79,7 +79,6 @@ def bootstrap_metrics(y_true, y_pred, n=bootstrap_n, seed=2026):
 
 
 def evaluate(name, y_true, y_pred, y_score=None):
-    """Compute and print all metrics; return dict."""
     acc   = accuracy_score(y_true, y_pred)
     f1    = f1_score(y_true, y_pred, labels=labels, average="macro", zero_division=0)
     kappa = cohen_kappa_score(y_true, y_pred) if len(set(y_true)) > 1 else float("nan")
@@ -319,16 +318,14 @@ def run_bert(X_train, X_test, y_train, y_test, random_state,
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Internal validation: train+test on LLM consensus labels (80/20 split)"
-    )
-    parser.add_argument("--bert",   action="store_true", help="also fine-tune MedRoBERTa.nl")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--bert", action="store_true")
     parser.add_argument("--seed",   type=int, default=2026)
     parser.add_argument("--epochs", type=int, default=3)
     parser.add_argument("--batch-size", type=int, default=8)
     args = parser.parse_args()
 
-    print("consensus split experiment (80/20)")
+    print("consensus split 80/20")
     print("  label  : label_gecombineerd_consensus")
     print("  text   : GP referral text (huisarts kolommen)")
     print(f"  seed   : {args.seed}")
@@ -349,7 +346,7 @@ def main():
 
     
     print()
-    print("summary - consensus 80/20 split")
+    print("summary")
     print(f"  {'model':<30s}  {'n':>4s}  {'acc':>6s}  {'f1-macro':>8s}  "
           f"{'kappa':>6s}  {'afwijkend_correct':>18s}  {'niet-afw_correct':>18s}")
     for r in results:

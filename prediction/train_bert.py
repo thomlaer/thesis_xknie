@@ -3,13 +3,10 @@ import json
 import sys
 import numpy as np
 import pandas as pd
-import torch
 from pathlib import Path
 from sklearn.metrics import accuracy_score, classification_report, cohen_kappa_score, f1_score, recall_score, roc_auc_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-from torch.utils.data import Dataset
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trainer, TrainingArguments
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -69,22 +66,25 @@ def softmax(logits):
     return exp / exp.sum(axis=1, keepdims=True)
 
 
-class TextDataset(Dataset):
-    def __init__(self, texts, labels, tokenizer, max_length=256):
-        self.encodings = tokenizer(
-            list(texts), truncation=True, padding="max_length",
-            max_length=max_length, return_tensors="pt",
-        )
-        self.labels = torch.tensor(labels, dtype=torch.long)
-
-    def __len__(self):
-        return len(self.labels)
-
-    def __getitem__(self, idx):
-        return {k: v[idx] for k, v in self.encodings.items()} | {"labels": self.labels[idx]}
-
-
 def run_model(model_key, epochs=3, batch_size=8, max_length=256):
+    import torch
+    from torch.utils.data import Dataset
+    from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trainer, TrainingArguments
+
+    class TextDataset(Dataset):
+        def __init__(self, texts, labels, tokenizer, max_length=256):
+            self.encodings = tokenizer(
+                list(texts), truncation=True, padding="max_length",
+                max_length=max_length, return_tensors="pt",
+            )
+            self.labels = torch.tensor(labels, dtype=torch.long)
+
+        def __len__(self):
+            return len(self.labels)
+
+        def __getitem__(self, idx):
+            return {k: v[idx] for k, v in self.encodings.items()} | {"labels": self.labels[idx]}
+
     cfg = bert_models[model_key]
     out_dir = models_dir / "bert" / cfg["name"]
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -219,6 +219,8 @@ def main():
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--max-length", type=int, default=256)
     args = parser.parse_args()
+
+    import torch
 
     print(f"device: {'cuda' if torch.cuda.is_available() else 'cpu'}")
 
