@@ -1,0 +1,22 @@
+# data
+*.xlsx
+*.xls
+*.csv
+few_shots.json
+data/
+
+# output folders
+models/
+figures/
+
+# python cache
+__pycache__/
+*.py[cod]
+
+# environment
+.venv/
+venv/
+
+# editor
+.ipynb_checkpoints/
+.vscode/
