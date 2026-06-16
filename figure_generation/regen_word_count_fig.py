@@ -11,7 +11,8 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from config import data_root
 
-long = pd.read_csv(data_root / "results" / "results_figures" / "word_count_distribution_long.csv")
+results_dir = data_root / "results_figures"
+long = pd.read_csv(results_dir / "word_count_distribution_long.csv")
 
 bins = ["0 words (empty)", "1-4 words", "5-9 words", "10-19 words", "20+ words"]
 plot_data = long.pivot(index="label", columns="word_group", values="percentage").fillna(0)
@@ -37,7 +38,7 @@ ax.legend(title="Word count", bbox_to_anchor=(1.02, 1), loc="upper left")
 ax.grid(axis="x", alpha=0.3)
 plt.tight_layout()
 
-out = data_root / "results" / "results_figures"
+out = results_dir
 out.mkdir(parents=True, exist_ok=True)
 plt.savefig(out / "figure_word_count_distribution_new.png", dpi=180, bbox_inches="tight")
 plt.close()
