@@ -12,11 +12,10 @@ radio_start = re.compile(
     r'\b(?:'
     r'DX\s+Knie'
     r'|X\s*[- ]?\s*Knie'
-    r'|Röntgen(?:opname)?'
-    r'|Rontgen(?:opname)?'
+    r'|R(?:\u00f6|\u00c3\u00b6|o)ntgen(?:opname)?'
     r'|Opname\s+van\s+de\s+knie'
     r'|Opnamen?\s+knie'
-    r'|Knie[ën]?\s+(?:links?|rechts?|beiderzijds)\s+in\s+\d+\s+richtingen'
+    r'|Knie(?:\u00ebn|en|\u00c3\u00abn|n)?\s+(?:links?|rechts?|beiderzijds)\s+in\s+\d+\s+richtingen'
     r'|AP\s+en\s+laterale\s+opname'
     r'|Normaal\s+trabeculair'
     r'|Normale\s+(?:stand|trabeculatie|kalkhoudendheid|patellofemorale)'
@@ -35,7 +34,7 @@ radio_start = re.compile(
 )
 
 bericht_sectie = re.compile(
-    r'(?:^|\n)\s*(?::|(?:Samen|Verslag|N\s*slag|[0-9]+\s*slag|Knie(?:ën|en|\?n|n)?|rechter\s*knie|linker\s*knie|rechterknie|linkerknie)\s*[.:\n])',
+    r'(?:^|\n)\s*(?::|(?:Samen|Verslag|N\s*slag|[0-9]+\s*slag|Knie(?:\u00ebn|en|\u00c3\u00abn|n)?|rechter\s*knie|linker\s*knie|rechterknie|linkerknie)\s*[.:\n])',
     re.IGNORECASE
 )
 
@@ -85,7 +84,7 @@ def leeg_naar_none(waarde):
 
 
 def is_knie_header(header):
-    return bool(re.search(r'\bknie(?:ën|en|\?n|n)?\b', header, re.IGNORECASE))
+    return bool(re.search(r'\bknie(?:\u00ebn|en|\u00c3\u00abn|n)?\b', header, re.IGNORECASE))
 
 
 def vorige_nietlege_regel(tekst, positie):
@@ -350,7 +349,7 @@ def clean_bevindingen(tekst):
     if not tekst:
         return None
     tekst = re.sub(r'^\s*(?:Samen|Verslag|N\s*slag|[0-9]+\s*slag)\s*[.:]?\s*', '', tekst, flags=re.IGNORECASE).strip()
-    tekst = re.sub(r'^\s*(?:Knie(?:ën|en|\?n|n)?)\s*:\s*', '', tekst, flags=re.IGNORECASE).strip()
+    tekst = re.sub(r'^\s*(?:Knie(?:\u00ebn|en|\u00c3\u00abn|n)?)\s*:\s*', '', tekst, flags=re.IGNORECASE).strip()
     tekst = re.sub(r'(?m)^\s*:\s*$', '', tekst).strip()
     m = niet_knie_subsectie.search(tekst)
     if m:

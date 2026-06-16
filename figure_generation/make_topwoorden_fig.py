@@ -88,7 +88,6 @@ nl_en = {
 
 
 def tokenize(text: str):
-    """Lowercase, split on non-alpha, filter stop words and short tokens."""
     tokens = re.findall(r"[a-zäëïöüáéíóúàèìòùâêîôû]+", str(text).lower())
     return [t for t in tokens if t not in stopwords and len(t) > 2]
 

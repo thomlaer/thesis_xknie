@@ -332,7 +332,6 @@ def make_confusion_matrix_grid(df, output_dir):
 
 
 def make_support_confusion_matrix_figures(llm_eval_dir, output_dir):
-    """Confusion matrices for artrose detection and KL grading support analyses."""
     llm_eval_dir = Path(llm_eval_dir)
     output_dir = Path(output_dir)
 
@@ -428,7 +427,6 @@ def make_combined_roc_plot(models_dir, output_dir, min_words=0):
 
 
 def make_combined_pr_plot(models_dir, output_dir, min_words=0):
-    """Precision-recall curves for all prediction models."""
     models_dir = Path(models_dir)
     paths = sorted(models_dir.rglob(f"*_minwords{min_words}_gold_test_precision_recall_curve.csv"))
     if len(paths) == 0:
@@ -468,7 +466,6 @@ def make_combined_pr_plot(models_dir, output_dir, min_words=0):
 
 
 def make_rq2_comparison_chart(llm_eval_dir, output_dir):
-    """Side-by-side bar chart comparing bevindingen vs conclusie on key metrics."""
     llm_eval_dir = Path(llm_eval_dir)
     summary_path = llm_eval_dir / "summary_metrics.csv"
     if not summary_path.exists():
@@ -536,7 +533,6 @@ def make_rq2_comparison_chart(llm_eval_dir, output_dir):
 
 
 def make_model_metrics_comparison(models_dir, output_dir, min_words=0):
-    """Horizontal bar chart comparing macro-F1 across all prediction models."""
     models_dir = Path(models_dir)
     paths = sorted(models_dir.rglob(f"*_minwords{min_words}_gold_test_metrics_ci.csv"))
     if len(paths) == 0:

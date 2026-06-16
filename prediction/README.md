@@ -10,14 +10,22 @@ Files for the prediction models.
 | `model_mlp_tfidf.py` | MLP with TF-IDF features |
 | `model_xgboost_tfidf.py` | XGBoost with TF-IDF features |
 | `train_bert.py` | MedRoBERTa.nl: GP only and GP + radiology |
-| `run_tuning_experiment.py` | Threshold tuning |
-| `run_extras.py` | McNemar and subgroup checks |
-| `run_consensus_split.py` | 80/20 split on consensus labels |
+| `prediction_results_notebook.ipynb` | Prediction result tables |
+| `run_tuning_experiment.py` | Threshold tuning experiment |
 
 Run from the project root:
 
 ```bash
 python run_pipeline.py baseline mlp xgboost bert
+python run_pipeline.py tuning
 ```
 
 Output is written to `DATA_ROOT/models`.
+
+For the prediction result tables, open:
+
+```text
+prediction/prediction_results_notebook.ipynb
+```
+
+The notebook reads the saved output files from `DATA_ROOT/models`.
