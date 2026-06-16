@@ -54,7 +54,7 @@ ax.set_yticklabels([f"KL {g}" for g in grades])
 ax.invert_yaxis()
 ax.set_xlabel("LLM consensus grade", fontsize=10)
 ax.set_ylabel("Gold standard grade", fontsize=10)
-ax.set_title("Kellgren–Lawrence grading: LLM consensus vs gold", fontsize=11)
+ax.set_title("Kellgren-Lawrence grading: LLM consensus vs gold", fontsize=11)
 plt.tight_layout()
 
 out = pathlib.Path(__file__).parent / "figures" / "fig_kl_heatmap"

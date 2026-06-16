@@ -69,7 +69,7 @@ fig, ax = plt.subplots(figsize=(10, 0.55 * nrows + 2.5))
 ax.axis("off")
 
 col_labels = frac_vals + ["Totaal"]
-row_labels  = [f"{a}\n× {t}" for a, t in rows_meta]
+row_labels  = [f"{a}\nx {t}" for a, t in rows_meta]
 
 
 cmap = plt.cm.get_cmap("YlOrRd")
@@ -84,7 +84,7 @@ for ri, (a, t) in enumerate(rows_meta):
     for ci, f in enumerate(frac_vals):
         n = n_mat[ri, ci]
         if n == 0:
-            row_txt.append("—")
+            row_txt.append("-")
             row_col.append("#f5f5f5")
         else:
             pct = pct_mat[ri, ci]
@@ -145,7 +145,7 @@ cbar.set_label("% afwijkend", fontsize=9)
 cbar.ax.tick_params(labelsize=8)
 
 ax.set_title(
-    "3-weg kruistabel: Artrose × Trauma × Fractuur  (gold test set, n=383)\n"
+    "3-weg kruistabel: Artrose x Trauma x Fractuur  (gold test set, n=383)\n"
     "Celwaarden: aantal gevallen + % afwijkend gold label",
     fontsize=10.5, fontweight="bold", pad=14,
 )

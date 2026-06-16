@@ -337,7 +337,7 @@ def make_support_confusion_matrix_figures(llm_eval_dir, output_dir):
 
     support_cases = [
         ("support_artrose_radiologie_confusion_matrix.csv", yes_no_labels, "Osteoarthritis detection\n(LLM vs expert)"),
-        ("support_artrose_graad_confusion_matrix.csv", grade_labels, "Kellgren–Lawrence grade\n(LLM vs expert)"),
+        ("support_artrose_graad_confusion_matrix.csv", grade_labels, "Kellgren-Lawrence grade\n(LLM vs expert)"),
     ]
 
     available = [(f, labels, title) for f, labels, title in support_cases if (llm_eval_dir / f).exists()]
@@ -360,7 +360,7 @@ def make_support_confusion_matrix_figures(llm_eval_dir, output_dir):
 
 def clean_roc_label(path):
     name = Path(path).stem.replace("_gold_test_roc_curve", "").replace("_gold_test_precision_recall_curve", "")
-    name = name.replace("_minwords0", "").replace("_minwords10", " (≥10 words)").replace("_", " ")
+    name = name.replace("_minwords0", "").replace("_minwords10", " (>=10 words)").replace("_", " ")
     replacements = {
         "tfidf logreg": "TF-IDF logistic regression",
         "tfidf mlp": "TF-IDF MLP",
@@ -598,7 +598,7 @@ def make_model_metrics_comparison(models_dir, output_dir, min_words=0):
     ax.set_xlim(0, 1.05)
     ax.axvline(x=0.5, linestyle="--", color="grey", linewidth=1, alpha=0.6)
     ax.grid(axis="x", alpha=0.3)
-    title_suffix = "" if min_words == 0 else f" (≥{min_words} words)"
+    title_suffix = "" if min_words == 0 else f" (>={min_words} words)"
     ax.set_title(f"Prediction model comparison{title_suffix}")
     plt.tight_layout()
     plt.savefig(Path(output_dir) / f"figure_model_metrics_comparison_minwords{min_words}.pdf")
